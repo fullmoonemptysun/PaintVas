@@ -44,20 +44,24 @@ table {
 	border-spacing: 0;
 }
 
-
-
-
-
+body{
+    background: linear-gradient(red, purple, black);
+}
 
 
 #container{
-
-    height: auto;
+    background-color: azure;
+    margin: 0 auto;
+    height: 640px;
+    width: 640px;
     display: flex;
     flex-wrap: wrap;
-
-    
 }
+
+/* .gridCell{
+    height: calc(640px/64);
+    width: calc(640px/64);
+} */
 
 .activeCell{
     background-color: red;
