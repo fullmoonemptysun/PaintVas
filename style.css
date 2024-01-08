@@ -19,6 +19,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+    font-family: "Minecraft Ten";
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -44,18 +45,119 @@ table {
 	border-spacing: 0;
 }
 
-body{
-    background: linear-gradient(red, purple, black);
+
+     
+
+
+.darkTheme{
+    background: url(./Graphics/darkTheme.png) center center no-repeat; 
+}
+
+.lightTheme{
+    background: url(./Graphics/lightTheme.jpg) center center no-repeat;
+}
+
+.lightFont{
+    color: white;
+}
+
+.buttons{
+    margin-top: 8px;
+    position: absolute;
+    left: 88vw;
+}
+
+.content{
+    display: flex;
+    margin: 2px 160px;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    font-size: 2em;
+}
+.header{
+    height: 40px;
+}
+
+.invisible{
+    visibility: hidden;
 }
 
 
+
+.icon{
+    background-color: rgba(256,256,256, 0.75);
+    padding: 4px;
+    border-radius: 4px;
+    position: relative;
+    width: 32px;
+    height: auto;
+}
+
+.dark{
+    z-index: 1;
+    left: 44px;
+}
+
+.light{
+    z-index: 2;
+}
+
+
+
+.zenMode {
+    border: none;
+}
+
+.main,
+.toolbox,
+.penStyle,
+.penConfig,
+.colorPicker,
+.texture{
+    display: flex;
+}
+
+.main{
+    justify-content: center;
+}
+
+.toolbox,
+.penStyle{
+    flex-direction: column;
+}
+
+.icon,
+.toolbox{
+    background-color: rgba(256,256,256,0.75);
+}
+
+.toolbox{
+    gap: 8px;
+    padding: 32px;
+    border-radius: 4px;
+    margin-right: 8px;
+    /* position: relative;
+    left: 16px;
+    top:  8px; */
+}
+
 #container{
+    border: 2px solid purple;
+    border-radius: 4px;
     background-color: azure;
-    margin: 0 auto;
-    height: 640px;
-    width: 640px;
+    height: 524px;
+    width: 524px;
     display: flex;
     flex-wrap: wrap;
+    gap: 0;
+    justify-content: center;
+    align-items: center;
+    
+    
+
 }
 
 /* .gridCell{

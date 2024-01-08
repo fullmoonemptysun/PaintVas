@@ -8,13 +8,64 @@
 
         <meta>
         <meta>
+        <link rel="icon" href="./favicon.ico">
+        <link href="https://db.onlinewebfonts.com/c/a7fcb1becc12274d5b761b1d895f8aa9?family=Minecraft+Ten" rel="stylesheet"> 
         <link href="style.css" rel="stylesheet" type="text/css">
         <script src="./sketch.js" defer></script>
     </head>
 
 
     <body>
-        <div>
+
+
+        <div class="header">
+            <div class="content">
+                <h1 class="heading">Pixel Art Designer</h1>
+                <div class="buttons">
+                    <img class="icon dark invisible" src="./Graphics/moon.png" >
+                    <img class="icon light" src="./Graphics/sun.png">
+
+                </div>
+            </div>
+        </div>
+
+
+        
+        <div class= "main">
+
+            <div class="toolbox">
+                <h2>Tool Box</h2>
+
+                <h3>Pen Type:</h3>
+                <div class="penStyle">
+                    
+                    <div class="input"><input id="color" name="pen" type="radio"> <label for="color">Color</label></div>
+                    <div class="input"><input name="pen" id="texture" type="radio"> <label for="texture">Texture</label></div>
+                    <div class="input"><input name="pen" id="rainbow" type="radio"> <label for="rainbow">Rainbow</label></div>
+                    <div class="input"><input name="pen" id="darken" type="radio"> <label for="darken">Darken</label></div>
+                    <div class="input"><input name="pen" id="eraser" type="radio"> <label for="eraser">Eraser</label></div>
+                </div>
+
+                <div class="penConfig">
+                    <div class="colorpicker">
+                        
+                        <input id="picker" type="color">
+                        
+                        <label for="picker">Chosen Color</label>
+                        
+                    </div>
+
+                    <div class="texture invisible">
+                        <div class="search">
+
+                        </div>
+
+                        <div class="chosen-texture">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div id = container>
 
             </div>
