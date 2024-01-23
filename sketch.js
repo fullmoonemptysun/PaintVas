@@ -1,4 +1,5 @@
 //Starting variables
+const penConfig = document.querySelector(".penConfig");
 const colorRadioButton = document.querySelector("#color");
 const textureRadioButton = document.querySelector("#texture");
 const rainbowRadioButton = document.querySelector("#rainbow");
@@ -11,9 +12,21 @@ const bod = document.querySelector("body");
 const sunButton = document.querySelector(".light");
 const moonButton = document.querySelector(".dark");
 const themeButtons = document.querySelector(".buttons");
-
+var inputType = "color";
+var penColor = document.getElementById("picker").value;
 
 //Event Listeners for pen buttons
+colorRadioButton.addEventListener('click', function(e){
+    inputType = "color";
+});
+textureRadioButton.addEventListener('click', function(){
+    inputType = "texture";
+
+    
+
+});
+
+
 
 
 
@@ -33,6 +46,12 @@ moonButton.addEventListener("click", function(){
     themeButtons.appendChild(sunButton);
     bod.classList.add("lightTheme");
     bod.classList.toggle("lightFont");
+})
+
+//color pen events
+const htmlColor = document.querySelector('#picker');
+htmlColor.addEventListener('change', function(e){
+    penColor = document.getElementById("picker").value;
 })
 
 
@@ -64,11 +83,14 @@ for(let i = 0; i < num; i++){
         const gridBlock = document.createElement('div');
         gridBlock.classList.add('gridCell');
         gridBlock.addEventListener('mousedown', function(e){
-            gridBlock.classList.add('activeCell')
+            switch(inputType){
+                case 'color':
+                    gridBlock.style.backgroundColor = `${penColor}`;
+            }
         })
         gridBlock.addEventListener('mouseover', function(event){
             if(mouseDown){
-               gridBlock.classList.add('activeCell') 
+               gridBlock.style.backgroundColor = `${penColor}`; 
             }
         })
         
@@ -84,3 +106,5 @@ for(let i = 0; i < num; i++){
 
 createGrid(num);
 const cells = document.querySelectorAll(".gridCell");
+
+
