@@ -10,6 +10,7 @@ const num = Number(prompt("n = ?"));
 const bod = document.querySelector("body");
 const sunButton = document.querySelector(".light");
 const moonButton = document.querySelector(".dark");
+const themeButtons = document.querySelector(".buttons");
 
 
 //Event Listeners for pen buttons
@@ -17,18 +18,19 @@ const moonButton = document.querySelector(".dark");
 
 
 bod.classList.add("lightTheme");
+themeButtons.removeChild(moonButton);
 //Event Listeners for theme buttons
 sunButton.addEventListener("click", function(e){
     bod.classList.remove("lightTheme");
-    sunButton.classList.toggle("invisible");
-    moonButton.classList.toggle("invisible");
+    themeButtons.removeChild(sunButton);
+    themeButtons.appendChild(moonButton);
     bod.classList.add("darkTheme");
     bod.classList.toggle("lightFont")
 })
 moonButton.addEventListener("click", function(){
     bod.classList.remove("darkTheme");
-    moonButton.classList.toggle("invisible");
-    sunButton.classList.toggle("invisible");
+    themeButtons.removeChild(moonButton);
+    themeButtons.appendChild(sunButton);
     bod.classList.add("lightTheme");
     bod.classList.toggle("lightFont");
 })
