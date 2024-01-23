@@ -1,4 +1,6 @@
 //Starting variables
+const texturepicker = document.querySelector('.texturepicker');
+const inputTypes = document.querySelectorAll("input[name='pen']");
 const penConfig = document.querySelector(".penConfig");
 const colorRadioButton = document.querySelector("#color");
 const textureRadioButton = document.querySelector("#texture");
@@ -12,19 +14,78 @@ const bod = document.querySelector("body");
 const sunButton = document.querySelector(".light");
 const moonButton = document.querySelector(".dark");
 const themeButtons = document.querySelector(".buttons");
-var inputType = "color";
+var inputType = inputSelection();
 var penColor = document.getElementById("picker").value;
 
+
+function inputSelection(){
+    var selected;
+    for (const Rbtn of inputTypes){
+        if(Rbtn.checked){
+            return Rbtn.id;
+        }
+    }
+}
 //Event Listeners for pen buttons
 colorRadioButton.addEventListener('click', function(e){
-    inputType = "color";
+    if(inputType == "texture"){
+        penConfig.removeChild(texturepicker);
+        penConfig.appendChild(colorpicker);
+    }
+
+    else if(inputType == "darken" || inputType == "rainbow" || inputType == "eraser"){
+        penConfig.appendChild(colorpicker);
+    }
+
+    inputType = inputSelection();
+
 });
 textureRadioButton.addEventListener('click', function(){
-    inputType = "texture";
+    if(inputType == "color"){
+        penConfig.removeChild(colorpicker);
+        penConfig.appendChild(texturepicker);
+    }
 
-    
+    else if(inputType == "darken" || inputType == "rainbow" || inputType == "eraser"){
+        penConfig.appendChild(texturepicker);
+    }
+
+    inputType = inputSelection();
 
 });
+rainbowRadioButton.addEventListener('click', function(){
+    if(inputType == "color"){
+        penConfig.removeChild(colorpicker);
+    }
+
+    else if(inputType = "texture"){
+        penConfig.removeChild(texturepicker);
+    }
+
+    inputType = inputSelection();
+});
+darkenRadioButton.addEventListener('click', function(){
+    if(inputType == "color"){
+        penConfig.removeChild(colorpicker);
+    }
+
+    else if(inputType = "texture"){
+        penConfig.removeChild(texturepicker);
+    }
+
+    inputType = inputSelection();
+});
+eraserRadioButton.addEventListener('click', function(){
+    if(inputType == "color"){
+        penConfig.removeChild(colorpicker);
+    }
+
+    else if(inputType = "texture"){
+        penConfig.removeChild(texturepicker);
+    }
+
+    inputType = inputSelection();
+})
 
 
 
@@ -86,11 +147,23 @@ for(let i = 0; i < num; i++){
             switch(inputType){
                 case 'color':
                     gridBlock.style.backgroundColor = `${penColor}`;
+                    break;
+                case 'eraser':
+                    gridBlock.style.backgroundColor = "white";
+                    break;
             }
         })
         gridBlock.addEventListener('mouseover', function(event){
             if(mouseDown){
-               gridBlock.style.backgroundColor = `${penColor}`; 
+                switch(inputType){
+                    case 'color':
+                        gridBlock.style.backgroundColor = `${penColor}`;
+                        break;
+                    case 'eraser':
+                        gridBlock.style.backgroundColor = "white";
+                        break;
+                }
+                     
             }
         })
         
