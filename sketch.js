@@ -1,3 +1,4 @@
+
 //Starting variables
 const texturepicker = document.querySelector('.texturepicker');
 const inputTypes = document.querySelectorAll("input[name='pen']");
@@ -14,10 +15,18 @@ const bod = document.querySelector("body");
 const sunButton = document.querySelector(".light");
 const moonButton = document.querySelector(".dark");
 const themeButtons = document.querySelector(".buttons");
+
+//Initialize interface with default setup
+colorRadioButton.checked = true; //ensuring inputType starts with 'color' as default regardless of the last choice.
 var inputType = inputSelection();
 var penColor = document.getElementById("picker").value;
+var textureChoice = 
 
+bod.classList.add("lightTheme");
+themeButtons.removeChild(moonButton);
+penConfig.removeChild(texturepicker);
 
+//Return the id of the radio button that is selected
 function inputSelection(){
     var selected;
     for (const Rbtn of inputTypes){
@@ -58,7 +67,7 @@ rainbowRadioButton.addEventListener('click', function(){
         penConfig.removeChild(colorpicker);
     }
 
-    else if(inputType = "texture"){
+    else if(inputType == "texture"){
         penConfig.removeChild(texturepicker);
     }
 
@@ -69,7 +78,7 @@ darkenRadioButton.addEventListener('click', function(){
         penConfig.removeChild(colorpicker);
     }
 
-    else if(inputType = "texture"){
+    else if(inputType == "texture"){
         penConfig.removeChild(texturepicker);
     }
 
@@ -80,7 +89,7 @@ eraserRadioButton.addEventListener('click', function(){
         penConfig.removeChild(colorpicker);
     }
 
-    else if(inputType = "texture"){
+    else if(inputType == "texture"){
         penConfig.removeChild(texturepicker);
     }
 
@@ -91,8 +100,7 @@ eraserRadioButton.addEventListener('click', function(){
 
 
 
-bod.classList.add("lightTheme");
-themeButtons.removeChild(moonButton);
+
 //Event Listeners for theme buttons
 sunButton.addEventListener("click", function(e){
     bod.classList.remove("lightTheme");
