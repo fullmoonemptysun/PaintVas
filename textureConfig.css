@@ -1,0 +1,22 @@
+
+.dirt{
+    background: url(./textures/dirt_block.png) center center no-repeat !important;
+    background-size : 100% !important;
+}
+
+.fire{
+    background: url(./textures/fire_block.gif) center center no-repeat !important;
+    background-size : 100% !important;
+}
+
+.grass {
+    background: url(./textures/grass_block.png) center center no-repeat !important;
+    background-size: 100% !important;
+}
+
+.brick {
+    background: url(./textures/gray_brick_block.png) center center no-repeat !important;
+    background-size: 100% !important;
+}
+
+

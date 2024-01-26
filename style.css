@@ -45,7 +45,15 @@ table {
 	border-spacing: 0;
 }
 
+.lightElement{
+    color: black;
+    background-color: rgb(218, 242, 242);
+}
 
+.darkElement{
+    color: white;
+    background-color: rgb(45, 51, 57);
+}
      
 
 
@@ -147,7 +155,6 @@ h1{
 #container{
     border: 2px solid purple;
     border-radius: 4px;
-    background-color: azure;
     height: 524px;
     width: 524px;
     display: flex;

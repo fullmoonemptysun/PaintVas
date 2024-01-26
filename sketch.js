@@ -1,5 +1,5 @@
 
-//Starting variables
+//Select relevant nodes
 const texturepicker = document.querySelector('.texturepicker');
 const inputTypes = document.querySelectorAll("input[name='pen']");
 const penConfig = document.querySelector(".penConfig");
@@ -16,13 +16,13 @@ const sunButton = document.querySelector(".light");
 const moonButton = document.querySelector(".dark");
 const themeButtons = document.querySelector(".buttons");
 
+
 //Initialize interface with default setup
 colorRadioButton.checked = true; //ensuring inputType starts with 'color' as default regardless of the last choice.
 var inputType = inputSelection();
 var penColor = document.getElementById("picker").value;
-var textureChoice = 
-
 bod.classList.add("lightTheme");
+container.classList.add("lightElement");
 themeButtons.removeChild(moonButton);
 penConfig.removeChild(texturepicker);
 
@@ -35,7 +35,8 @@ function inputSelection(){
         }
     }
 }
-//Event Listeners for pen buttons
+
+//Event Listeners for pen radio buttons
 colorRadioButton.addEventListener('click', function(e){
     if(inputType == "texture"){
         penConfig.removeChild(texturepicker);
@@ -96,8 +97,15 @@ eraserRadioButton.addEventListener('click', function(){
     inputType = inputSelection();
 })
 
+//Returns the selected texture type
+function getTextureType(){
+    var texturelist = document.querySelector("select[name= 'texture']");
 
+    var textureChosen = texturelist.value;
 
+    return textureChosen;
+
+}
 
 
 
@@ -108,6 +116,8 @@ sunButton.addEventListener("click", function(e){
     themeButtons.appendChild(moonButton);
     bod.classList.add("darkTheme");
     bod.classList.toggle("lightFont")
+    container.classList.toggle("darkElement");
+    container.classList.toggle("lightElement")
 })
 moonButton.addEventListener("click", function(){
     bod.classList.remove("darkTheme");
@@ -115,6 +125,8 @@ moonButton.addEventListener("click", function(){
     themeButtons.appendChild(sunButton);
     bod.classList.add("lightTheme");
     bod.classList.toggle("lightFont");
+    container.classList.toggle("lightElement");
+    container.classList.toggle("darkElement");
 })
 
 //color pen events
@@ -145,31 +157,95 @@ let width = (widthString.match(/\d+/))[0];
 
 
 
+//removes all texture classes from a cell
+function removetextureClasses(gridNode){
+    const classes = gridNode.classList;
+    const classesArr = Array.from(classes);
+
+    classesArr.forEach(function(className){
+        if(className!="gridCell"){
+            classes.remove(className);
+        }
+    });
+
+};
+
+//Resets grid cell for next interaction
+function resetGridCell(gridNode){
+    removetextureClasses(gridNode)
+
+    gridNode.style.background = "none";
+    
+}
+
+
+
 
 function createGrid(num){
 for(let i = 0; i < num; i++){
     for(let j = 0; j < num; j++){
         const gridBlock = document.createElement('div');
-        gridBlock.classList.add('gridCell');
         gridBlock.addEventListener('mousedown', function(e){
+            resetGridCell(gridBlock);
             switch(inputType){
                 case 'color':
-                    gridBlock.style.backgroundColor = `${penColor}`;
+                   
+                    gridBlock.style.background = `${penColor}`;
                     break;
                 case 'eraser':
-                    gridBlock.style.backgroundColor = "white";
+                    
+                    gridBlock.style.background = "none";
                     break;
+                case 'texture':
+                    var bgImage = getTextureType();
+                    switch(bgImage){
+                        case 'dirt':
+                            gridBlock.classList.add("dirt");
+                            break;
+                        case 'fire':
+                            gridBlock.classList.add("fire");
+                            break;
+                        case 'grass':
+                            gridBlock.classList.add("grass");
+                            break;
+                        case 'brick':
+                            gridBlock.classList.add("brick");
+                            break;
+                    }
+                    break;
+
             }
         })
         gridBlock.addEventListener('mouseover', function(event){
             if(mouseDown){
+                resetGridCell(gridBlock);
                 switch(inputType){
                     case 'color':
-                        gridBlock.style.backgroundColor = `${penColor}`;
+                        
+                        gridBlock.style.background = `${penColor}`;
                         break;
                     case 'eraser':
-                        gridBlock.style.backgroundColor = "white";
+                        
+                        gridBlock.style.background = "none";
                         break;
+                    case 'texture':
+                        var bgImage = getTextureType();
+                        switch(bgImage){
+                            case 'dirt':
+                                gridBlock.classList.add("dirt");
+                                break;
+                            case 'fire':
+                                gridBlock.classList.add("fire");
+                                break;
+                            case 'grass':
+                                gridBlock.classList.add("grass");
+                                break;
+                            case 'brick':
+                                gridBlock.classList.add("brick");
+                                break;
+                            }
+                            break;
+
                 }
                      
             }
