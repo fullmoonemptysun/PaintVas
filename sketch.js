@@ -10,12 +10,21 @@ const darkenRadioButton = document.querySelector("#darken");
 const eraserRadioButton = document.querySelector("#eraser");
 const colorpicker = document.querySelector(".colorpicker");
 const container = document.querySelector('#container');
-const num = Number(prompt("n = ?"));
 const bod = document.querySelector("body");
 const sunButton = document.querySelector(".light");
 const moonButton = document.querySelector(".dark");
 const themeButtons = document.querySelector(".buttons");
+const slider = document.querySelector("#slider");
+let gridDimension = slider.value;
+const sliderLabel = document.querySelector(".slider-label");
+sliderLabel.textContent = `${gridDimension} x ${gridDimension}`;
 
+slider.addEventListener("change", function(e){
+    gridDimension = slider.value;
+    sliderLabel.textContent = `${gridDimension} x ${gridDimension}`;
+    createGrid(gridDimension);
+
+})
 
 //Initialize interface with default setup
 colorRadioButton.checked = true; //ensuring inputType starts with 'color' as default regardless of the last choice.
@@ -181,9 +190,9 @@ function resetGridCell(gridNode){
 
 
 
-function createGrid(num){
-for(let i = 0; i < num; i++){
-    for(let j = 0; j < num; j++){
+function createGrid(gridDimension){
+for(let i = 0; i < gridDimension; i++){
+    for(let j = 0; j < gridDimension; j++){
         const gridBlock = document.createElement('div');
         gridBlock.addEventListener('mousedown', function(e){
             resetGridCell(gridBlock);
@@ -251,8 +260,8 @@ for(let i = 0; i < num; i++){
             }
         })
         
-        gridBlock.style.height = `calc(100%/${num})`;
-        gridBlock.style.width = `calc(100%/${num})`;
+        gridBlock.style.height = `calc(100%/${gridDimension})`;
+        gridBlock.style.width = `calc(100%/${gridDimension})`;
         gridBlock.style.userSelect = "none";
         container.appendChild(gridBlock);
 
@@ -261,7 +270,7 @@ for(let i = 0; i < num; i++){
 }
 
 
-createGrid(num);
+createGrid(gridDimension);
 const cells = document.querySelectorAll(".gridCell");
 
 
