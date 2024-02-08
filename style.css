@@ -28,6 +28,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+    overflow: hidden;
 }
 ol, ul {
 	list-style: none;
@@ -58,11 +59,13 @@ table {
 
 
 .darkTheme{
-    background: url(./Graphics/darkTheme.png) center center no-repeat; 
+    background: url(./Graphics/darkTheme.png) center center fixed; 
+    background-size: cover;
 }
 
 .lightTheme{
-    background: url(./Graphics/lightTheme.jpg) center center no-repeat;
+    background: url(./Graphics/lightTheme.jpg) center center fixed;
+    background-size: cover;
 }
 
 .lightFont{

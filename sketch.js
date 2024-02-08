@@ -19,10 +19,28 @@ let gridDimension = slider.value;
 const sliderLabel = document.querySelector(".slider-label");
 sliderLabel.textContent = `${gridDimension} x ${gridDimension}`;
 
+function removeAllCells(){
+    let gridList = document.querySelectorAll(".gridCell");
+    gridList.forEach((gridCell) => {
+        gridCell.parentNode.removeChild(gridCell);
+    })
+}
+
+function resetGrid(gridDimension){
+    removeAllCells();
+    createGrid(gridDimension);
+}
+
+slider.addEventListener("click", function(){
+    sliderLabel.textContent = `${gridDimension} x ${gridDimension}`;
+
+})
+
+slider.addEvent
 slider.addEventListener("change", function(e){
     gridDimension = slider.value;
     sliderLabel.textContent = `${gridDimension} x ${gridDimension}`;
-    createGrid(gridDimension);
+    resetGrid(gridDimension);
 
 })
 
@@ -194,6 +212,7 @@ function createGrid(gridDimension){
 for(let i = 0; i < gridDimension; i++){
     for(let j = 0; j < gridDimension; j++){
         const gridBlock = document.createElement('div');
+        gridBlock.classList.add("gridCell");
         gridBlock.addEventListener('mousedown', function(e){
             resetGridCell(gridBlock);
             switch(inputType){
@@ -271,6 +290,6 @@ for(let i = 0; i < gridDimension; i++){
 
 
 createGrid(gridDimension);
-const cells = document.querySelectorAll(".gridCell");
+
 
 
