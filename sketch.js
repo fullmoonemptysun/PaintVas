@@ -19,23 +19,30 @@ let gridDimension = slider.value;
 const sliderLabel = document.querySelector(".slider-label");
 sliderLabel.textContent = `${gridDimension} x ${gridDimension}`;
 
+//rainbow functionality
+function randomRGB(){
+    let colorValue = Math.floor(Math.random()*256);
+
+    return colorValue;
+}
+
+
+
+//Grid configuration/reset functionality
 function removeAllCells(){
     let gridList = document.querySelectorAll(".gridCell");
     gridList.forEach((gridCell) => {
         gridCell.parentNode.removeChild(gridCell);
     })
 }
-
 function resetGrid(gridDimension){
     removeAllCells();
     createGrid(gridDimension);
 }
-
 slider.addEventListener("click", function(){
     sliderLabel.textContent = `${gridDimension} x ${gridDimension}`;
 
 })
-
 slider.addEvent
 slider.addEventListener("change", function(e){
     gridDimension = slider.value;
@@ -55,7 +62,6 @@ penConfig.removeChild(texturepicker);
 
 //Return the id of the radio button that is selected
 function inputSelection(){
-    var selected;
     for (const Rbtn of inputTypes){
         if(Rbtn.checked){
             return Rbtn.id;
@@ -220,6 +226,14 @@ for(let i = 0; i < gridDimension; i++){
                    
                     gridBlock.style.background = `${penColor}`;
                     break;
+
+                case 'rainbow':
+                    let Red = randomRGB();
+                    let Green = randomRGB();
+                    let Blue = randomRGB();
+
+                    gridBlock.style.background = `rgb(${Red}, ${Green}, ${Blue})`
+                    break;
                 case 'eraser':
                     
                     gridBlock.style.background = "none";
@@ -249,11 +263,15 @@ for(let i = 0; i < gridDimension; i++){
                 resetGridCell(gridBlock);
                 switch(inputType){
                     case 'color':
-                        
                         gridBlock.style.background = `${penColor}`;
                         break;
+                    case 'rainbow':
+                        let Red = randomRGB();
+                        let Green = randomRGB();
+                        let Blue = randomRGB();
+                        gridBlock.style.background = `rgb(${Red}, ${Green}, ${Blue})`
+                        break;
                     case 'eraser':
-                        
                         gridBlock.style.background = "none";
                         break;
                     case 'texture':
