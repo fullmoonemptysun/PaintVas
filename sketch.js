@@ -211,6 +211,58 @@ function resetGridCell(gridNode){
     
 }
 
+function getHue(maxVal, minVal, RED, GREEN, BLUE){
+
+    let hueVal = 0;
+
+    if (minVal == maxVal){
+        hueVal = 0;
+    }
+    else if (maxVal == RED){
+         hueVal = ((GREEN - BLUE)/(maxVal - minVal));
+    }
+
+    else if (maxVal == GREEN){
+         hueVal = (2.0 + ((BLUE - RED)/(maxVal - minVal)));
+    }
+
+    else{
+         hueVal = (4.0 + ((RED - GREEN)/(maxVal - minVal)));
+    }
+
+    
+
+
+    let hueAngle = (Number)(hueVal * 60);
+    if(hueAngle < 0){
+        return (hueAngle + 360);
+    }
+
+    else{
+        return hueAngle;
+    }
+}
+
+//uses the formula (minRgb+maxRgb/2) to get the luminance
+function getLuminance(minRgb, maxRgb){
+    return Math.round(((minRgb+maxRgb)/2) * 100);
+}
+
+function getSat(minRgb, maxRgb, luminance){
+    if(minRgb == maxRgb){
+        return 0;
+    }
+
+    //if minRgb and maxRgb are not equal
+    else if(luminance <= 0.5){
+        return Math.round((maxRgb-minRgb)/(maxRgb+minRgb)*100);
+    }
+
+    else{
+        return Math.round((maxRgb-minRgb)/(2.0-maxRgb-minRgb) * 100);
+    }
+}
+
 
 
 
@@ -220,25 +272,95 @@ for(let i = 0; i < gridDimension; i++){
         const gridBlock = document.createElement('div');
         gridBlock.classList.add("gridCell");
         gridBlock.addEventListener('mousedown', function(e){
-            resetGridCell(gridBlock);
             switch(inputType){
                 case 'color':
+                    resetGridCell(gridBlock);
                    
                     gridBlock.style.background = `${penColor}`;
                     break;
 
                 case 'rainbow':
+                    resetGridCell(gridBlock);
                     let Red = randomRGB();
                     let Green = randomRGB();
                     let Blue = randomRGB();
 
                     gridBlock.style.background = `rgb(${Red}, ${Green}, ${Blue})`
                     break;
+
+                case 'darken':
+                    let bgColor = gridBlock.style.background;
+                    /**
+                     * No matter what, style.background/(Color) returns rgb() format
+                     * So it is safe to modify it using hsl and then expect an rgb
+                     * value when extracting color
+                     */
+                    //regex to extract the r,g,b values
+                    let rgbArray = bgColor.match(/rgb\((\d+), (\d+), (\d+)\)/)
+
+                    if(rgbArray == null){
+                        break;
+                    }
+
+                    let red = (Number)(rgbArray[1]);
+                    let green = (Number)(rgbArray[2]);
+                    let blue = (Number)(rgbArray[3]);
+
+                    //calculating r/255, g/255, b/255
+                    let redDec = red/255;
+                    let greenDec = green/255;
+                    let blueDec = blue/255;
+                    minRgb = Math.min(redDec, greenDec, blueDec);
+                    maxRgb = Math.max(redDec, greenDec, blueDec);
+                    let lumi = getLuminance(minRgb, maxRgb);
+                    let sat = getSat(minRgb, maxRgb, lumi);
+                    let hue = getHue(maxRgb, minRgb, redDec, greenDec, blueDec);
+
+                    if(gridBlock.classList.contains("started")){
+                        //convert the class list to an actual array
+                        let classArray = Array.from(gridBlock.classList);
+                        //create a string of all classes out of the array
+                        //to be able to match a regex
+                        let classString = classArray.join("_");
+                        //use regex to extract the tenPercentLum value stored as a class.
+                        let tenPercentValArr = classString.match(/tenPercent\-(\d+)/);
+
+                        let lumDecrement = (Number)(tenPercentValArr[1]);
+
+                        if(lumi <= 0){
+
+                        }
+
+                        else{
+                            gridBlock.style.background = `hsl(${hue}, ${sat}%, ${lumi - lumDecrement}%)`;
+                        }
+
+                    }
+
+                    else{
+
+                        //this class indicates the grid has been darkened at least once
+                        gridBlock.classList.add("started");
+
+                        //value that will be decremented from the hue
+                        //everytime.
+                        let tenPercentLum = Math.round(lumi * 0.1);
+
+                        //if started is found in classList, this value
+                        // wil be extracted to decrease from the current lum.
+                        // (10% of what it is before darkening started)
+                        gridBlock.classList.add(`tenPercent-${tenPercentLum}`);
+
+                        gridBlock.style.background = `hsl(${hue}, ${sat}%, ${lumi - tenPercentLum}%)`;
+                    }
+
+                    break;
                 case 'eraser':
-                    
+                    resetGridCell(gridBlock);
                     gridBlock.style.background = "none";
                     break;
                 case 'texture':
+                    resetGridCell(gridBlock);
                     var bgImage = getTextureType();
                     switch(bgImage){
                         case 'dirt':
@@ -260,22 +382,93 @@ for(let i = 0; i < gridDimension; i++){
         })
         gridBlock.addEventListener('mouseover', function(event){
             if(mouseDown){
-                resetGridCell(gridBlock);
                 switch(inputType){
                     case 'color':
+                        resetGridCell(gridBlock);
                         gridBlock.style.background = `${penColor}`;
                         break;
                     case 'rainbow':
+                        resetGridCell(gridBlock);
                         let Red = randomRGB();
                         let Green = randomRGB();
                         let Blue = randomRGB();
                         gridBlock.style.background = `rgb(${Red}, ${Green}, ${Blue})`
                         break;
                     case 'eraser':
+                        resetGridCell(gridBlock);
                         gridBlock.style.background = "none";
                         break;
+                    
+                    case 'darken':
+                        let bgColor = gridBlock.style.background;
+                        /**
+                         * No matter what, style.background/(Color) returns rgb() format
+                         * So it is safe to modify it using hsl and then expect an rgb
+                         * value when extracting color
+                         */
+                        //regex to extract the r,g,b values
+                        let rgbArray = bgColor.match(/rgb\((\d+), (\d+), (\d+)\)/)
+                        if(rgbArray == null){
+                            break;
+                        }
+
+                        let red = (Number)(rgbArray[1]);
+                        let green = (Number)(rgbArray[2]);
+                        let blue = (Number)(rgbArray[3]);
+
+                        //calculating r/255, g/255, b/255
+                        let redDec = red/255;
+                        let greenDec = green/255;
+                        let blueDec = blue/255;
+                        minRgb = Math.min(redDec, greenDec, blueDec);
+                        maxRgb = Math.max(redDec, greenDec, blueDec);
+                        let lumi = getLuminance(minRgb, maxRgb);
+                        let sat = getSat(minRgb, maxRgb, lumi);
+                        let hue = getHue(maxRgb, minRgb, redDec, greenDec, blueDec);
+
+                        if(gridBlock.classList.contains("started")){
+                            //convert the class list to an actual array
+                            let classArray = Array.from(gridBlock.classList);
+                            //create a string of all classes out of the array
+                            //to be able to match a regex
+                            let classString = classArray.join("_");
+                            //use regex to extract the tenPercentLum value stored as a class.
+                            let tenPercentValArr = classString.match(/tenPercent\-(\d+)/);
+
+                            let lumDecrement = (Number)(tenPercentValArr[1]);
+
+                            if(lumi <= 0){
+
+                            }
+
+                            else{
+                                gridBlock.style.background = `hsl(${hue}, ${sat}%, ${lumi - lumDecrement}%)`
+                            }
+
+                        }
+
+                        else{
+
+                            //this class indicates the grid has been darkened at least once
+                            gridBlock.classList.add("started");
+
+                            //value that will be decremented from the hue
+                            //everytime.
+                            let tenPercentLum = Math.round(lumi * 0.1);
+
+                            //if started is found in classList, this value
+                            // wil be extracted to decrease from the current lum.
+                            // (10% of what it is before darkening started)
+                            gridBlock.classList.add(`tenPercent-${tenPercentLum}`);
+
+                            gridBlock.style.background = `hsl(${hue}, ${sat}%, ${lumi - tenPercentLum}%)`;
+                        }
+
+
+                        break;
                     case 'texture':
-                        var bgImage = getTextureType();
+                        resetGridCell(gridBlock);
+                        let bgImage = getTextureType();
                         switch(bgImage){
                             case 'dirt':
                                 gridBlock.classList.add("dirt");

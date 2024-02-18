@@ -171,6 +171,10 @@ h1{
 
 }
 
+#slider{
+    width: 75%;
+}
+
 /* .gridCell{
     height: calc(640px/64);
     width: calc(640px/64);
