@@ -265,7 +265,7 @@ function getSat(minRgb, maxRgb, luminance){
 
 
 
-
+//create the gridDimension x gridDimension grid of square cells
 function createGrid(gridDimension){
 for(let i = 0; i < gridDimension; i++){
     for(let j = 0; j < gridDimension; j++){
